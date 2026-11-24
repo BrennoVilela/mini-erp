@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using MiniErp.Api.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MiniErp")));
 
 // Add services to the container.
 
