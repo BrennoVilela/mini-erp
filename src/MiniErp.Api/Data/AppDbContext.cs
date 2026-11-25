@@ -6,6 +6,7 @@ namespace MiniErp.Api.Data;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<Customer> Customers => Set<Customer>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -16,6 +17,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             entity.HasIndex(p => p.Sku).IsUnique();
             entity.Property(p => p.Description).HasMaxLength(1000);
             entity.Property(p => p.Price).HasPrecision(18, 2);
+        });
+
+        modelBuilder.Entity<Customer>(entity =>
+        {
+            entity.Property(c => c.Name).HasMaxLength(150);
+            entity.Property(c => c.Document).HasMaxLength(20);
+            entity.HasIndex(c => c.Document).IsUnique();
+            entity.Property(c => c.Email).HasMaxLength(200);
         });
     }
 }

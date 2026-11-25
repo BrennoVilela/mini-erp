@@ -8,6 +8,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("MiniErp")));
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 // Add services to the container.
 
