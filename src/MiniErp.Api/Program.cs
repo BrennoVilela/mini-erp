@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using MiniErp.Api.Data;
+using MiniErp.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("MiniErp")));
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // Add services to the container.
 
@@ -18,6 +21,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "Mini ERP API v1");
+    });
 }
 
 app.UseHttpsRedirection();
